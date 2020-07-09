@@ -2,12 +2,6 @@
 
 require("@babel/polyfill");
 
-require("@babel/core");
-
-require("@babel/node");
-
-require("@babel/preset-env");
-
 var _dotenv = _interopRequireDefault(require("dotenv"));
 
 require("./db");
