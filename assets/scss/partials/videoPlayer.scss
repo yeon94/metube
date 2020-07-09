@@ -1,0 +1,91 @@
+.videoPlayer {
+	height: 70vh;
+	width: 100%;
+	background-color: $black;
+	position: relative;
+	display: flex;
+	justify-content: center;
+	&:hover {
+		.videoPlayer__controls {
+			opacity: 1;
+		}
+	}
+	video {
+		height: 100%;
+	}
+	.videoPlayer__controls {
+		transition: opacity 0.2s ease-in-out;
+		width: 100%;
+		height: 40px;
+		display: grid;
+		align-items: center;
+		justify-content: center;
+		grid-template-columns: repeat(16, 1fr);
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		background-color: $deepblue;
+		color: white;
+		opacity: 0;
+		.videoPlayer__column {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+
+			&:first-child {
+				position: relative;
+				&:hover {
+					.videoPlayer-volume {
+						opacity: 1;
+					}
+				}
+
+				.videoPlayer-volume {
+					width: 100%;
+					height: 100px;
+					background-color: $deepblue;
+					position: absolute;
+					top: -100px;
+					left: 0px;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					opacity: 0;
+				}
+				.videoPlayer__volume {
+					transform: rotate(-90deg);
+					padding: 0;
+					margin: 0;
+					z-index: 10;
+				}
+			}
+			&:nth-child(4) {
+				grid-column: span 3;
+			}
+
+			span {
+				i {
+					cursor: pointer;
+				}
+			}
+		}
+		.progress_bar {
+			grid-column: span 10;
+			position: relative;
+			.bar {
+				width: 100%;
+				height: 10px;
+				background-color: #fff;
+				cursor: pointer;
+			}
+			.progress {
+				width: 0;
+				height: 10px;
+				background-color: $skyblue;
+				position: absolute;
+				top: 0;
+				left: 0;
+			}
+		}
+	}
+}

@@ -1,0 +1,75 @@
+html,
+body {
+	height: 100%;
+}
+body {
+	@import url("https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Noto+Sans+KR:wght@400;700&display=swap");
+	background-color: $white;
+	font-family: "Lato", sans-serif, "Noto Sans KR", sans-serif;
+}
+main {
+	width: 100%;
+	max-width: 1000px;
+	margin: 0 auto;
+	min-height: 75vh;
+}
+label {
+	margin-bottom: 10px;
+}
+input {
+	width: 100%;
+	font-size: 15px;
+	padding: 10px;
+	&::placeholder {
+		font-weight: normal;
+	}
+	&:not(:last-child) {
+		border: 1px solid $deepblue;
+		margin-bottom: 20px;
+	}
+}
+input[type="submit"] {
+	background-color: $deepblue;
+	color: white;
+	cursor: pointer;
+	padding: 20px;
+}
+textarea {
+	width: 100%;
+	margin-bottom: 10px;
+	font-size: 15px;
+	padding: 10px;
+	margin-bottom: 20px;
+	background: unset;
+	border: 1px solid $deepblue;
+	&::placeholder {
+		color: $deepblue;
+		font-weight: normal;
+	}
+	&:focus {
+		outline: none;
+	}
+}
+h1.title {
+	color: $deepblue;
+	font-weight: bold;
+	font-size: 30px;
+	margin-bottom: 50px;
+}
+button {
+	width: 45%;
+	margin-bottom: 20px;
+	padding: 20px;
+	font-size: 17px;
+	border: none;
+	cursor: pointer;
+	line-height: 20px;
+	i {
+		font-weight: blod;
+		font-size: 17px;
+		margin-right: 5px;
+	}
+}
+#viewCommentId {
+	display: none;
+}

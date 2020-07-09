@@ -1,0 +1,16 @@
+.footer {
+	display: grid;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	height: 10vh;
+	border-top: 1px solid $deepblue_opasity;
+	color: $deepblue_opasity;
+	font-size: 20px;
+	.footer__icon {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		font-size: 30px;
+	}
+}
