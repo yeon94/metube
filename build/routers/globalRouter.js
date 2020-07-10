@@ -33,5 +33,9 @@ globalRouter.get(_routes["default"].githubCallback, _passport["default"].authent
   failureRedirect: "/login"
 }), _userController.postGithubLogin);
 globalRouter.get(_routes["default"].myprofile, _userController.getMyProfile);
+globalRouter.get(_routes["default"].kakao, _userController.kakaoLogin);
+globalRouter.get(_routes["default"].kakaoCallback, _passport["default"].authenticate("kakao", {
+  failureRedirect: "/login"
+}), _userController.postKakaoLogIn);
 var _default = globalRouter;
 exports["default"] = _default;

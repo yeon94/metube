@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.postEditPassword = exports.getEditPassword = exports.postEditProfile = exports.getEditProfile = exports.userDetail = exports.getMyProfile = exports.logout = exports.postGithubLogin = exports.githubLoginCallback = exports.githubLogin = exports.postLogin = exports.getLogin = exports.postJoin = exports.getJoin = void 0;
+exports.postEditPassword = exports.getEditPassword = exports.postEditProfile = exports.getEditProfile = exports.userDetail = exports.getMyProfile = exports.logout = exports.postKakaoLogIn = exports.kakaoLoginCallback = exports.kakaoLogin = exports.postGithubLogin = exports.githubLoginCallback = exports.githubLogin = exports.postLogin = exports.getLogin = exports.postJoin = exports.getJoin = void 0;
 
 var _passport = _interopRequireDefault(require("passport"));
 
@@ -171,6 +171,76 @@ var postGithubLogin = function postGithubLogin(req, res) {
 
 exports.postGithubLogin = postGithubLogin;
 
+var kakaoLogin = _passport["default"].authenticate("kakao");
+
+exports.kakaoLogin = kakaoLogin;
+
+var kakaoLoginCallback = /*#__PURE__*/function () {
+  var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(_, __, profile, cb) {
+    var name, _profile$_json2, id, email, user, newUser;
+
+    return regeneratorRuntime.wrap(function _callee3$(_context3) {
+      while (1) {
+        switch (_context3.prev = _context3.next) {
+          case 0:
+            name = profile.username, _profile$_json2 = profile._json, id = _profile$_json2.id, email = _profile$_json2.kakao_account.email;
+            console.log(email);
+            _context3.prev = 2;
+            _context3.next = 5;
+            return _User["default"].findOne({
+              email: email
+            });
+
+          case 5:
+            user = _context3.sent;
+
+            if (!user) {
+              _context3.next = 10;
+              break;
+            }
+
+            user.kakaoId = id;
+            user.save();
+            return _context3.abrupt("return", cb(null, user));
+
+          case 10:
+            _context3.next = 12;
+            return _User["default"].create({
+              email: email,
+              name: name,
+              kakaoId: id
+            });
+
+          case 12:
+            newUser = _context3.sent;
+            return _context3.abrupt("return", cb(null, newUser));
+
+          case 16:
+            _context3.prev = 16;
+            _context3.t0 = _context3["catch"](2);
+            return _context3.abrupt("return", cb(_context3.t0));
+
+          case 19:
+          case "end":
+            return _context3.stop();
+        }
+      }
+    }, _callee3, null, [[2, 16]]);
+  }));
+
+  return function kakaoLoginCallback(_x8, _x9, _x10, _x11) {
+    return _ref3.apply(this, arguments);
+  };
+}();
+
+exports.kakaoLoginCallback = kakaoLoginCallback;
+
+var postKakaoLogIn = function postKakaoLogIn(req, res) {
+  res.redirect(_routes["default"].home);
+};
+
+exports.postKakaoLogIn = postKakaoLogIn;
+
 var logout = function logout(req, res) {
   req.logout();
   res.redirect(_routes["default"].home);
@@ -188,42 +258,42 @@ var getMyProfile = function getMyProfile(req, res) {
 exports.getMyProfile = getMyProfile;
 
 var userDetail = /*#__PURE__*/function () {
-  var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(req, res) {
+  var _ref4 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(req, res) {
     var id, user;
-    return regeneratorRuntime.wrap(function _callee3$(_context3) {
+    return regeneratorRuntime.wrap(function _callee4$(_context4) {
       while (1) {
-        switch (_context3.prev = _context3.next) {
+        switch (_context4.prev = _context4.next) {
           case 0:
             id = req.params.id;
-            _context3.prev = 1;
-            _context3.next = 4;
+            _context4.prev = 1;
+            _context4.next = 4;
             return _User["default"].findById(id).populate("videos");
 
           case 4:
-            user = _context3.sent;
+            user = _context4.sent;
             console.log(user);
             res.render("userDetail", {
               pageTitle: "User Detail",
               user: user
             });
-            _context3.next = 12;
+            _context4.next = 12;
             break;
 
           case 9:
-            _context3.prev = 9;
-            _context3.t0 = _context3["catch"](1);
+            _context4.prev = 9;
+            _context4.t0 = _context4["catch"](1);
             res.redirect(_routes["default"].home);
 
           case 12:
           case "end":
-            return _context3.stop();
+            return _context4.stop();
         }
       }
-    }, _callee3, null, [[1, 9]]);
+    }, _callee4, null, [[1, 9]]);
   }));
 
-  return function userDetail(_x8, _x9) {
-    return _ref3.apply(this, arguments);
+  return function userDetail(_x12, _x13) {
+    return _ref4.apply(this, arguments);
   };
 }();
 
@@ -238,16 +308,16 @@ var getEditProfile = function getEditProfile(req, res) {
 exports.getEditProfile = getEditProfile;
 
 var postEditProfile = /*#__PURE__*/function () {
-  var _ref4 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(req, res) {
+  var _ref5 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee5(req, res) {
     var _req$body2, name, email, file;
 
-    return regeneratorRuntime.wrap(function _callee4$(_context4) {
+    return regeneratorRuntime.wrap(function _callee5$(_context5) {
       while (1) {
-        switch (_context4.prev = _context4.next) {
+        switch (_context5.prev = _context5.next) {
           case 0:
             _req$body2 = req.body, name = _req$body2.name, email = _req$body2.email, file = req.file;
-            _context4.prev = 1;
-            _context4.next = 4;
+            _context5.prev = 1;
+            _context5.next = 4;
             return _User["default"].findByIdAndUpdate(req.user.id, {
               name: name,
               email: email,
@@ -255,24 +325,24 @@ var postEditProfile = /*#__PURE__*/function () {
             });
 
           case 4:
-            _context4.next = 9;
+            _context5.next = 9;
             break;
 
           case 6:
-            _context4.prev = 6;
-            _context4.t0 = _context4["catch"](1);
+            _context5.prev = 6;
+            _context5.t0 = _context5["catch"](1);
             res.redirect(_routes["default"].editProfile);
 
           case 9:
           case "end":
-            return _context4.stop();
+            return _context5.stop();
         }
       }
-    }, _callee4, null, [[1, 6]]);
+    }, _callee5, null, [[1, 6]]);
   }));
 
-  return function postEditProfile(_x10, _x11) {
-    return _ref4.apply(this, arguments);
+  return function postEditProfile(_x14, _x15) {
+    return _ref5.apply(this, arguments);
   };
 }();
 
@@ -287,50 +357,50 @@ var getEditPassword = function getEditPassword(req, res) {
 exports.getEditPassword = getEditPassword;
 
 var postEditPassword = /*#__PURE__*/function () {
-  var _ref5 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee5(req, res) {
+  var _ref6 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee6(req, res) {
     var _req$body3, oldPassword, newPassword, newPasswordV;
 
-    return regeneratorRuntime.wrap(function _callee5$(_context5) {
+    return regeneratorRuntime.wrap(function _callee6$(_context6) {
       while (1) {
-        switch (_context5.prev = _context5.next) {
+        switch (_context6.prev = _context6.next) {
           case 0:
             _req$body3 = req.body, oldPassword = _req$body3.oldPassword, newPassword = _req$body3.newPassword, newPasswordV = _req$body3.newPasswordV;
-            _context5.prev = 1;
+            _context6.prev = 1;
 
             if (!(newPassword !== newPasswordV)) {
-              _context5.next = 6;
+              _context6.next = 6;
               break;
             }
 
             res.status(400);
             res.redirect("/users/".concat(_routes["default"].editPassword));
-            return _context5.abrupt("return");
+            return _context6.abrupt("return");
 
           case 6:
-            _context5.next = 8;
+            _context6.next = 8;
             return req.user.changePassword(oldPassword, newPassword);
 
           case 8:
             res.redirect(_routes["default"].myprofile);
-            _context5.next = 15;
+            _context6.next = 15;
             break;
 
           case 11:
-            _context5.prev = 11;
-            _context5.t0 = _context5["catch"](1);
+            _context6.prev = 11;
+            _context6.t0 = _context6["catch"](1);
             res.status(400);
             res.redirect("/users/".concat(_routes["default"].editPassword));
 
           case 15:
           case "end":
-            return _context5.stop();
+            return _context6.stop();
         }
       }
-    }, _callee5, null, [[1, 11]]);
+    }, _callee6, null, [[1, 11]]);
   }));
 
-  return function postEditPassword(_x12, _x13) {
-    return _ref5.apply(this, arguments);
+  return function postEditPassword(_x16, _x17) {
+    return _ref6.apply(this, arguments);
   };
 }();
 

@@ -29,7 +29,9 @@ var DELETE_VIDEO = "/:id/delete"; //Passport
 
 var GITHUB = "/auth/github";
 var GITHUB_CALLBACK = "/auth/github/callback";
-var MYPROFILE = "/profile"; //API
+var MYPROFILE = "/profile";
+var KAKAO = "/oauth/kakao";
+var KAKAO_CALLBACK = "/oauth/kakao/callback"; //API
 
 var API = "/api";
 var REGISTER_VIEW = "/:id/view";
@@ -80,7 +82,9 @@ var routes = {
   api: API,
   registerView: REGISTER_VIEW,
   addComment: ADD_COMMENT,
-  deleteComment: DELETE_COMMENT
+  deleteComment: DELETE_COMMENT,
+  kakao: KAKAO,
+  kakaoCallback: KAKAO_CALLBACK
 };
 var _default = routes;
 exports["default"] = _default;

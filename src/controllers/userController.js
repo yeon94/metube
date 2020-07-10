@@ -63,6 +63,37 @@ export const githubLoginCallback = async (_, __, profile, cb) => {
 export const postGithubLogin = (req, res) => {
 	res.redirect(routes.home);
 };
+export const kakaoLogin = passport.authenticate("kakao");
+
+export const kakaoLoginCallback = async (_, __, profile, cb) => {
+	const {
+		username: name,
+		_json: {
+			id,
+			kakao_account: { email },
+		},
+	} = profile;
+	console.log(email);
+	try {
+		const user = await User.findOne({ email });
+		if (user) {
+			user.kakaoId = id;
+			user.save();
+			return cb(null, user);
+		}
+		const newUser = await User.create({
+			email,
+			name,
+			kakaoId: id,
+		});
+		return cb(null, newUser);
+	} catch (error) {
+		return cb(error);
+	}
+};
+export const postKakaoLogIn = (req, res) => {
+	res.redirect(routes.home);
+};
 
 export const logout = (req, res) => {
 	req.logout();

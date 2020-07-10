@@ -19,8 +19,14 @@ _passport["default"].use(_User["default"].createStrategy());
 _passport["default"].use(new _passportGithub["default"]({
   clientID: process.env.GH_ID,
   clientSecret: process.env.GH_SECRET,
-  callbackURL: "http://localhost:4000".concat(_routes["default"].githubCallback)
+  callbackURL: process.env.PRODUCTION ? "https://murmuring-castle-64725.herokuapp.com".concat(_routes["default"].githubCallback) : "http://localhost:4000".concat(_routes["default"].githubCallback)
 }, _userController.githubLoginCallback));
+
+_passport["default"].use(new _passportKakao["default"]({
+  clientID: process.env.KAKAO_ID,
+  clientSecret: "",
+  callbackURL: process.env.PRODUCTION ? "https://quiet-ocean-34936.herokuapp.com".concat(_routes["default"].kakaoCallback) : "http://localhost:4000".concat(_routes["default"].kakaoCallback)
+}, _userController.kakaoLoginCallback));
 
 _passport["default"].serializeUser(_User["default"].serializeUser());
 
