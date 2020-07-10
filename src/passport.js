@@ -25,7 +25,7 @@ passport.use(
 passport.use(
 	new KakaoStrategy(
 		{
-			clientID: process.env.KAKAO_ID,
+			clientID: process.env.KAKAO_SECRET,
 			clientSecret: "",
 			callbackURL: process.env.PRODUCTION
 				? `https://quiet-ocean-34936.herokuapp.com${routes.kakaoCallback}`
